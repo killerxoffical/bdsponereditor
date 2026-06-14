@@ -481,7 +481,6 @@
             ctx.restore();
         }
 
-        // ... [Theme 1 to 8 remains the same] ...
         function drawOverlay1(ctx, w, h, time) {
             const phase = time % 3.5, state = overlayStates[Math.floor((time % 14) / 3.5)];
             let yOffset = phase < 0.5 ? 20*(1 - Math.pow(1 - phase/0.5, 3)) : phase > 3.0 ? -20*Math.pow((phase-3.0)/0.5, 2) : 20;
@@ -491,11 +490,19 @@
             ctx.lineWidth = 2; ctx.strokeStyle = "rgba(255, 185, 0, 0.4)"; ctx.stroke();
             ctx.globalAlpha = alpha;
             const cY = 30 + yOffset - 20, currentImg = state.isQr ? qrImg : logoImg;
+            
             let textX = 120;
             if (currentImg.complete && currentImg.height > 0) {
-                if (state.isQr) { ctx.drawImage(currentImg, 35, cY+10, 70, 70); } 
-                else { ctx.drawImage(currentImg, 35, cY+25, 40*(currentImg.width/currentImg.height), 40); }
+                if (state.isQr) { 
+                    ctx.drawImage(currentImg, 35, cY+10, 70, 70); 
+                    textX = 35 + 70 + 20;
+                } else { 
+                    const drawWidth = 40*(currentImg.width/currentImg.height);
+                    ctx.drawImage(currentImg, 35, cY+25, drawWidth, 40); 
+                    textX = 35 + drawWidth + 20;
+                }
             }
+            
             ctx.fillStyle = state.titleCol; ctx.font = "bold 24px 'Teko', sans-serif"; ctx.fillText(state.title, textX, cY+40);
             ctx.fillStyle = state.subCol; ctx.font = "bold 18px 'Hind Siliguri', sans-serif"; ctx.fillText(state.sub, textX, cY+70);
             ctx.globalAlpha = 1.0; 
