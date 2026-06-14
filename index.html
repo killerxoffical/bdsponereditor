@@ -224,8 +224,14 @@
             </div>
 
             <div class="theme-selector">
+                <label style="color:#ffb900; font-weight:bold; font-size:16px; margin-bottom:10px; display:block;">2. কাস্টম লিংক ও কিউআর কোড (Custom Links)</label>
+                <input type="text" id="websiteLink" value=(document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM") placeholder="ওয়েবসাইট লিংক দিন (যেমন: BOOYAH.COM)" style="margin-bottom:10px;">
+                <input type="text" id="qrLink" value="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.google.com&bgcolor=ffffff" placeholder="QR Code Image Link">
+            </div>
+
+            <div class="theme-selector">
                 <label class="checkbox-label">
-                    <input type="checkbox" id="chkOverlay" checked> 2. Overlay Ad (ওয়াটারমার্ক)
+                    <input type="checkbox" id="chkOverlay" checked> 3. Overlay Ad (ওয়াটারমার্ক)
                 </label>
                 <select id="overlayTheme">
                     <option value="1">Theme 1: Premium Sliding Box</option>
@@ -243,7 +249,7 @@
 
             <div class="theme-selector">
                 <label class="checkbox-label">
-                    <input type="checkbox" id="chkOutro" checked> 3. Outro Ad (ভিডিওর শেষে)
+                    <input type="checkbox" id="chkOutro" checked> 4. Outro Ad (ভিডিওর শেষে)
                 </label>
                 <select id="outroTheme">
                     <option value="1">Theme 1: Premium Slam & Dust</option>
@@ -302,8 +308,10 @@
         let isProcessing = false;
 
         // Load Images
+        const qrLinkInput = document.getElementById('qrLink');
+        const websiteLinkInput = document.getElementById('websiteLink');
         const logoImg = new Image(); logoImg.src = "https://pub-4c6b2dbf3a0c4862a8964b1546de6283.r2.dev/Free%20fire/booyah_day.png";
-        const qrImg = new Image(); qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.google.com&bgcolor=ffffff";
+        const qrImg = new Image(); if(qrLinkInput) { qrImg.src = qrLinkInput.value; qrLinkInput.addEventListener('input', () => { qrImg.src = qrLinkInput.value; }); }
         const charImg = new Image(); charImg.src = "https://pub-4c6b2dbf3a0c4862a8964b1546de6283.r2.dev/Free%20fire/1781173588043__CITYPNG.COM_Free_Fire_Shani_Female_Character___800x800.png";
         
         // App Logo for Watermark
@@ -457,12 +465,15 @@
         // ==========================================
         // 2. OVERLAY DRAWING LOGIC (10 THEMES)
         // ==========================================
-        const overlayStates = [
-            { isQr: false, title: "BOOYAH DAY APP", titleCol: "#ffffff", sub: "ফ্রি ফায়ার খেলে ফ্রি ডায়মন্ড আর্নিং করুন! 💎", subCol: "#ffb900" },
-            { isQr: true,  title: "স্ক্যান করে ডাউনলোড করুন", titleCol: "#00e6ff", sub: "রিল আপলোড করে টাকা আর্নিং এর সুবর্ণ সুযোগ!", subCol: "#ffffff" },
-            { isQr: false, title: "FREE FIRE REWARDS", titleCol: "#ffffff", sub: "প্রতিদিন অ্যাপ থেকে ফ্রি রিওয়ার্ডস জিতে নিন!", subCol: "#ffb900" },
-            { isQr: true,  title: "www.google.com", titleCol: "#00e6ff", sub: "সরাসরি ওয়েবসাইট থেকে এখনই ইন্সটল করুন!", subCol: "#ffffff" }
-        ];
+        function getOverlayStates() {
+            const link = document.getElementById('websiteLink') ? document.getElementById('websiteLink').value.toUpperCase() : (document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM");
+            return [
+                { isQr: false, title: "BOOYAH DAY APP", titleCol: "#ffffff", sub: "ফ্রি ফায়ার খেলে ফ্রি ডায়মন্ড আর্নিং করুন! 💎", subCol: "#ffb900" },
+                { isQr: true,  title: "স্ক্যান করে ডাউনলোড করুন", titleCol: "#00e6ff", sub: "রিল আপলোড করে টাকা আর্নিং এর সুবর্ণ সুযোগ!", subCol: "#ffffff" },
+                { isQr: false, title: "FREE FIRE REWARDS", titleCol: "#ffffff", sub: "প্রতিদিন অ্যাপ থেকে ফ্রি রিওয়ার্ডস জিতে নিন!", subCol: "#ffb900" },
+                { isQr: true,  title: link, titleCol: "#00e6ff", sub: "সরাসরি ওয়েবসাইট থেকে এখনই ইন্সটল করুন!", subCol: "#ffffff" }
+            ];
+        }
 
         function drawOverlay(ctx, cw, ch, theme, time) {
             const scale = cw / 720; 
@@ -482,7 +493,7 @@
         }
 
         function drawOverlay1(ctx, w, h, time) {
-            const phase = time % 3.5, state = overlayStates[Math.floor((time % 14) / 3.5)];
+            const phase = time % 3.5, state = getOverlayStates()[Math.floor((time % 14) / 3.5)];
             let yOffset = phase < 0.5 ? 20*(1 - Math.pow(1 - phase/0.5, 3)) : phase > 3.0 ? -20*Math.pow((phase-3.0)/0.5, 2) : 20;
             let alpha = phase < 0.5 ? 1 - Math.pow(1 - phase/0.5, 3) : phase > 3.0 ? 1 - Math.pow((phase-3.0)/0.5, 2) : 1;
 
@@ -514,7 +525,7 @@
             ctx.fillStyle = "rgba(255, 255, 255, 0.95)"; ctx.beginPath(); ctx.roundRect(160, h-180+floatY, 400, 80, 15); ctx.fill();
             ctx.lineWidth = 3; ctx.strokeStyle = "#ff8c00"; ctx.stroke();
             ctx.beginPath(); ctx.moveTo(180, h-120+floatY); ctx.lineTo(140, h-80+floatY); ctx.lineTo(210, h-100+floatY); ctx.fillStyle="white"; ctx.fill(); ctx.stroke();
-            const state = overlayStates[Math.floor((time%12)/3)];
+            const state = getOverlayStates()[Math.floor((time%12)/3)];
             ctx.fillStyle = "#000"; ctx.font = "bold 24px 'Teko', sans-serif"; ctx.fillText(state.title, 175, h-145+floatY);
             ctx.fillStyle = "#d32f2f"; ctx.font = "bold 18px 'Hind Siliguri', sans-serif"; ctx.fillText(state.sub, 175, h-115+floatY);
         }
@@ -537,13 +548,13 @@
             ctx.fillStyle = "rgba(0, 0, 0, 0.85)"; ctx.fillRect(0, tY, w, 50);
             ctx.fillStyle = "#ff0000"; ctx.fillRect(0, tY - 3, w, 3); 
             ctx.fillStyle = "#fff"; ctx.font = "bold 22px 'Hind Siliguri', sans-serif";
-            const text = "🔥 BOOYAH DAY APP 🔥 রিল আপলোড করে টাকা ও ডায়মন্ড আর্নিং এর সুবর্ণ সুযোগ! 💎 www.google.com থেকে এখনই ডাউনলোড করুন! ";
+            const text = `🔥 BOOYAH DAY APP 🔥 রিল আপলোড করে টাকা ও ডায়মন্ড আর্নিং এর সুবর্ণ সুযোগ! 💎 ${(document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toLowerCase():"www.google.com")} থেকে এখনই ডাউনলোড করুন! `;
             ctx.fillText(text, w - ((time * 120) % (ctx.measureText(text).width + w)), tY+32);
             if(charImg.complete && charImg.width > 0) ctx.drawImage(charImg, w-130, tY - 120*(charImg.height/charImg.width) + 15, 120, 120*(charImg.height/charImg.width));
         }
 
         function drawOverlay5(ctx, w, h, time) {
-            const state = overlayStates[Math.floor((time%6)/3)*2]; 
+            const state = getOverlayStates()[Math.floor((time%6)/3)*2]; 
             ctx.save(); ctx.fillStyle = "rgba(255, 185, 0, 0.9)"; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(350,0); ctx.lineTo(300,100); ctx.lineTo(0,100); ctx.fill();
             ctx.fillStyle = "rgba(0, 0, 0, 0.8)"; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(330,0); ctx.lineTo(280,90); ctx.lineTo(0,90); ctx.fill();
             if (time % 1 < 0.1) { ctx.fillStyle = "rgba(255,255,255,0.3)"; ctx.fill(); }
@@ -715,7 +726,7 @@
                 ctx.fillStyle = "#ffb900"; ctx.font = "bold 40px 'Teko', sans-serif"; ctx.fillText("CLAIM YOUR FREE DIAMOND!", w / 2, qrY + qrSize + 50);
                 ctx.fillStyle = "#ffffff"; ctx.font = "bold 26px 'Hind Siliguri', sans-serif"; ctx.fillText("এখনই শুরু করুন কন্টেন্ট ক্রিয়েটিং!", w / 2, qrY + qrSize + 90);
                 ctx.fillStyle = "#00e6ff"; ctx.font = "bold 22px 'Hind Siliguri', sans-serif"; ctx.fillText("রিলস বা ভিডিও আপলোড করে টাকা ও ডায়মন্ড আর্নিং করুন!", w / 2, qrY + qrSize + 130);
-                ctx.fillStyle = "#ff4b00"; ctx.font = "bold 40px 'Teko', sans-serif"; ctx.fillText("WWW.GOOGLE.COM", w / 2, qrY + qrSize + 200);
+                ctx.fillStyle = "#ff4b00"; ctx.font = "bold 40px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w / 2, qrY + qrSize + 200);
                 ctx.globalAlpha = 1; ctx.textAlign = "left"; 
             }
         }
@@ -736,7 +747,7 @@
                 ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText("FREE FIRE REWARDS", w/2, 220);
                 ctx.fillStyle = "#fff"; ctx.font = "bold 24px 'Hind Siliguri', sans-serif"; ctx.fillText("গেম খেলুন, রিলস আপলোড করুন এবং জিতুন!", w/2, 260);
                 if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 60, 320, 120, 120);
-                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 35px 'Teko', sans-serif"; ctx.fillText("WWW.GOOGLE.COM", w/2, 480);
+                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 35px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, 480);
                 ctx.textAlign = "left";
             }
         }
@@ -754,7 +765,7 @@
                 if(elapsed > 2.5) {
                     ctx.fillText("> UPLOAD REELS TO EARN.".substring(0, Math.min(23, Math.floor((elapsed - 2.5) * 20))), w/2, 400);
                     if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 50, 450, 100, 100);
-                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 36px 'Teko', sans-serif"; ctx.fillText("WWW.GOOGLE.COM", w/2, 600);
+                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 36px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, 600);
                 }
                 ctx.textAlign = "left";
             }
@@ -776,7 +787,7 @@
                 ctx.fillStyle = "#00e6ff"; ctx.font = "bold 55px 'Teko', sans-serif"; ctx.fillText("10,000 DIAMONDS WAITING!", w/2, h/2 - 20);
                 ctx.fillStyle = "#fff"; ctx.font = "bold 28px 'Hind Siliguri', sans-serif"; ctx.fillText("শুধু রিল আপলোড করলেই পাবেন!", w/2, h/2 + 30);
                 if (qrImg.complete) { ctx.fillStyle = "#fff"; ctx.fillRect(w/2-80, h/2+80, 160, 160); ctx.drawImage(qrImg, w/2-75, h/2+85, 150, 150); }
-                ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText("WWW.GOOGLE.COM", w/2, h/2 + 290);
+                ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 290);
                 ctx.globalAlpha = 1; ctx.textAlign = "left";
             }
         }
@@ -791,7 +802,7 @@
                 if (elapsed > 2) {
                     ctx.fillStyle = "#fff"; ctx.font = "bold 26px 'Hind Siliguri', sans-serif"; ctx.fillText("অ্যাপটি এখনই ইন্সটল করে জিতে নিন!", w/2, h/2 + 40);
                     if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 80, h/2 + 80, 160, 160);
-                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText("WWW.GOOGLE.COM", w/2, h/2 + 300);
+                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 300);
                 }
                 ctx.textAlign = "left";
             }
@@ -806,7 +817,7 @@
                 ctx.fillStyle = "#fff"; ctx.font = "bold 34px 'Hind Siliguri', sans-serif"; ctx.fillText("সময় শেষ হওয়ার আগেই ক্লেইম করুন!", w/2, h/2);
                 ctx.fillStyle = "#ffb900"; ctx.font = "bold 26px 'Hind Siliguri', sans-serif"; ctx.fillText("রিলস আপলোড করে আনলিমিটেড ডায়মন্ড আর্নিং!", w/2, h/2 + 50);
                 if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 75, h/2 + 90, 150, 150);
-                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText("WWW.GOOGLE.COM", w/2, h/2 + 290);
+                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 290);
             }
             ctx.textAlign = "left";
         }
@@ -843,7 +854,7 @@
                     if (qrImg.complete) { ctx.fillStyle = "#fff"; ctx.fillRect(w/2-80, h/2-10, 160, 160); ctx.drawImage(qrImg, w/2-75, h/2-5, 150, 150); }
                     
                     ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif";
-                    ctx.fillText("WWW.GOOGLE.COM", w/2, h/2 + 210);
+                    ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 210);
                     ctx.globalAlpha = 1.0;
                 }
                 ctx.textAlign = "left";
@@ -880,7 +891,7 @@
                     
                     if (qrImg.complete) ctx.drawImage(qrImg, w/2-60, h/2 + 100, 120, 120);
                     ctx.fillStyle = "#00e6ff"; ctx.font = "bold 40px 'Teko', sans-serif";
-                    ctx.fillText("WWW.GOOGLE.COM", w/2, h/2 + 270);
+                    ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 270);
                     ctx.textAlign = "left";
                 }
             }
