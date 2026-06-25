@@ -3,900 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOOYAH DAY - Video Processor Tool (ULTRA PRO)</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Hind+Siliguri:wght@500;600;700&display=swap');
-
-        body {
-            background-color: #0b0c10;
-            color: #fff;
-            font-family: 'Hind Siliguri', sans-serif;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        h1 {
-            font-family: 'Teko', sans-serif;
-            color: #ffb900;
-            font-size: 42px;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-align: center;
-            text-shadow: 0 4px 10px rgba(255, 185, 0, 0.4);
-        }
-
-        .app-wrapper {
-            display: flex;
-            gap: 40px;
-            justify-content: center;
-            align-items: flex-start;
-            max-width: 1100px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-
-        /* Controls Section */
-        .container {
-            background: #1f2833;
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #45a29e;
-            width: 420px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #66fcf1;
-            font-weight: 600;
-            font-size: 15px;
-        }
-
-        input[type="file"], input[type="text"], select {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: #0b0c10;
-            border: 1px solid #45a29e;
-            border-radius: 6px;
-            color: #fff;
-            cursor: pointer;
-            font-family: 'Hind Siliguri', sans-serif;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        
-        input[type="text"] {
-            cursor: text;
-        }
-
-        .theme-selector {
-            background: #0b0c10;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #ffb900;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-
-        .btn {
-            background: linear-gradient(90deg, #ff8c00, #ffb900);
-            border: none;
-            padding: 14px 20px;
-            width: 100%;
-            border-radius: 6px;
-            color: #000;
-            font-weight: 700;
-            font-size: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 140, 0, 0.6);
-        }
-
-        .btn:disabled {
-            background: #444;
-            color: #888;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        #status {
-            margin-top: 15px;
-            font-weight: bold;
-            color: #00e6ff;
-            text-align: center;
-        }
-
-        #download-link {
-            display: none;
-            margin-top: 20px;
-            background: #66fcf1;
-            color: #000;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 18px;
-            transition: 0.3s;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        #download-link:hover {
-            background: #45a29e;
-            color: #fff;
-        }
-
-        /* Preview Section */
-        .preview-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 360px;
-        }
-
-        .preview-tabs {
-            display: flex;
-            width: 100%;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px;
-            background: #1f2833;
-            border: 1px solid #45a29e;
-            color: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .tab-btn.active {
-            background: #45a29e;
-            color: #000;
-        }
-
-        .preview-canvas-container {
-            position: relative;
-            width: 360px;
-            height: 640px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-            border: 2px solid #333;
-        }
-
-        #previewCanvas {
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=360&q=80') center/cover;
-        }
-
-        #renderCanvas, #sourceVideo {
-            display: none;
-        }
-    </style>
+    <title>Elite Bot Control Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-white font-sans min-h-screen p-4 md:p-8">
 
-    <h1>BOOYAH DAY VIDEO TOOL (ULTRA PRO)</h1>
-    
-    <div class="app-wrapper">
-        <div class="container">
-            <div class="input-group">
-                <label>১. রিল বা ভিডিও আপলোড করুন (MP4):</label>
-                <input type="file" id="videoFile" accept="video/*">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- ================= LINKS MANAGEMENT ================= -->
+        <div class="bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 flex flex-col h-[90vh]">
+            <div class="flex items-center justify-between mb-4 border-b border-gray-700 pb-4 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-bold text-xl shadow-[0_0_15px_#3b82f6]">🔗</div>
+                    <div>
+                        <h1 class="text-lg font-bold uppercase tracking-wider text-blue-400">URL Queue</h1>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">TikTok, Insta, YT Links</p>
+                    </div>
+                </div>
+                <div class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-lg font-mono font-bold border border-blue-500/30">
+                    Total: <span id="link-count">0</span>
+                </div>
             </div>
 
-            <!-- New Bouncing Watermark Feature -->
-            <div class="theme-selector">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="chkWatermark" checked> 1. Reel Watermark (টিকটক স্টাইল)
-                </label>
-                <input type="text" id="watermarkText" value="@booyah_day_app" placeholder="ইউজারনেম বা টেক্সট দিন">
+            <!-- Input Section -->
+            <div class="flex flex-col gap-2 mb-4 shrink-0">
+                <input type="url" id="link-input" class="w-full bg-gray-900 border border-gray-600 rounded-xl p-3 text-sm outline-none focus:border-blue-500 transition-colors" placeholder="Paste Video URL here...">
+                <button onclick="submitLink()" id="submit-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl uppercase tracking-widest transition-all text-sm">
+                    Add to Queue
+                </button>
             </div>
 
-            <div class="theme-selector">
-                <label style="color:#ffb900; font-weight:bold; font-size:16px; margin-bottom:10px; display:block;">2. কাস্টম লিংক ও কিউআর কোড (Custom Links)</label>
-                <input type="text" id="websiteLink" value=(document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM") placeholder="ওয়েবসাইট লিংক দিন (যেমন: BOOYAH.COM)" style="margin-bottom:10px;">
-                <input type="text" id="qrLink" value="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.google.com&bgcolor=ffffff" placeholder="QR Code Image Link">
-            </div>
-
-            <div class="theme-selector">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="chkOverlay" checked> 3. Overlay Ad (ওয়াটারমার্ক)
-                </label>
-                <select id="overlayTheme">
-                    <option value="1">Theme 1: Premium Sliding Box</option>
-                    <option value="2">Theme 2: Character Popup (Shani)</option>
-                    <option value="3">Theme 3: Floating Badge</option>
-                    <option value="4">Theme 4: News Ticker</option>
-                    <option value="5">Theme 5: Diagonal Banner</option>
-                    <option value="6">Theme 6: Diamond Rain</option>
-                    <option value="7">Theme 7: Dual Character Clash</option>
-                    <option value="8">Theme 8: Flash Sale/Warning</option>
-                    <option value="9" style="color:#ffb900;">Theme 9: Esports Broadcast (Premium)</option>
-                    <option value="10" style="color:#ffb900;">Theme 10: iOS Style Popup (Premium)</option>
-                </select>
-            </div>
-
-            <div class="theme-selector">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="chkOutro" checked> 4. Outro Ad (ভিডিওর শেষে)
-                </label>
-                <select id="outroTheme">
-                    <option value="1">Theme 1: Premium Slam & Dust</option>
-                    <option value="2">Theme 2: Fire Character Reveal</option>
-                    <option value="3">Theme 3: Cyber Glitch Text</option>
-                    <option value="4">Theme 4: Diamond Explosion</option>
-                    <option value="5">Theme 5: Neon Sign Glowing</option>
-                    <option value="6">Theme 6: Countdown Rush</option>
-                    <option value="7" style="color:#00e6ff;">Theme 7: Golden Victory Confetti (NEW)</option>
-                    <option value="8" style="color:#00e6ff;">Theme 8: Speed Blur Rush (NEW)</option>
-                </select>
-            </div>
-
-            <button class="btn" id="processBtn">ভিডিও প্রসেস করুন</button>
-            <div id="status"></div>
-            <a id="download-link" download="booyah_processed_reel.webm">⬇ ভিডিও ডাউনলোড করুন</a>
-        </div>
-
-        <div class="preview-section">
-            <div class="preview-tabs">
-                <button class="tab-btn active" id="tabOverlay" onclick="setPreviewMode('overlay')">Preview Overlay</button>
-                <button class="tab-btn" id="tabOutro" onclick="setPreviewMode('outro')">Preview Outro</button>
-            </div>
-            <div class="preview-canvas-container">
-                <canvas id="previewCanvas" width="360" height="640"></canvas>
+            <!-- List Section (GitHub Style) -->
+            <div class="flex-1 overflow-y-auto pr-2 flex flex-col gap-2" id="links-list">
+                <p class="text-center text-sm text-gray-500 py-10">Loading...</p>
             </div>
         </div>
+
+        <!-- ================= ACCOUNTS MANAGEMENT ================= -->
+        <div class="bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 flex flex-col h-[90vh]">
+            <div class="flex items-center justify-between mb-4 border-b border-gray-700 pb-4 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center font-bold text-xl shadow-[0_0_15px_#f97316]">🤖</div>
+                    <div>
+                        <h1 class="text-lg font-bold uppercase tracking-wider text-orange-400">Bot Accounts</h1>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">Auto Rotation Active</p>
+                    </div>
+                </div>
+                <div class="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-lg font-mono font-bold border border-orange-500/30">
+                    Total: <span id="acc-count">0</span>
+                </div>
+            </div>
+
+            <!-- Input Section -->
+            <div class="flex flex-col gap-2 mb-4 shrink-0">
+                <input type="email" id="acc-email" class="w-full bg-gray-900 border border-gray-600 rounded-xl p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Account Email">
+                <input type="text" id="acc-pass" class="w-full bg-gray-900 border border-gray-600 rounded-xl p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Account Password">
+                <button onclick="submitAccount()" id="acc-submit-btn" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 rounded-xl uppercase tracking-widest transition-all text-sm">
+                    Add Account
+                </button>
+            </div>
+
+            <!-- List Section -->
+            <div class="flex-1 overflow-y-auto pr-2 flex flex-col gap-2" id="accounts-list">
+                <p class="text-center text-sm text-gray-500 py-10">Loading...</p>
+            </div>
+        </div>
+
     </div>
 
-    <video id="sourceVideo" muted playsinline></video>
-    <canvas id="renderCanvas" width="720" height="1280"></canvas>
-
     <script>
-        const videoInput = document.getElementById('videoFile');
-        const processBtn = document.getElementById('processBtn');
-        const statusDiv = document.getElementById('status');
-        const sourceVideo = document.getElementById('sourceVideo');
-        const renderCanvas = document.getElementById('renderCanvas');
-        const renderCtx = renderCanvas.getContext('2d');
-        const previewCanvas = document.getElementById('previewCanvas');
-        const previewCtx = previewCanvas.getContext('2d');
-        const downloadLink = document.getElementById('download-link');
-        
-        const chkWatermark = document.getElementById('chkWatermark');
-        const watermarkText = document.getElementById('watermarkText');
-        const chkOverlay = document.getElementById('chkOverlay');
-        const overlayThemeSelect = document.getElementById('overlayTheme');
-        const chkOutro = document.getElementById('chkOutro');
-        const outroThemeSelect = document.getElementById('outroTheme');
-
-        let previewMode = 'overlay'; 
-        let previewOutroStartTime = Date.now();
-        let mediaRecorder;
-        let recordedChunks = [];
-        let processOutroStartTime = 0;
-        let isProcessing = false;
-
-        // Load Images
-        const qrLinkInput = document.getElementById('qrLink');
-        const websiteLinkInput = document.getElementById('websiteLink');
-        const logoImg = new Image(); logoImg.src = "https://pub-4c6b2dbf3a0c4862a8964b1546de6283.r2.dev/Free%20fire/booyah_day.png";
-        const qrImg = new Image(); if(qrLinkInput) { qrImg.src = qrLinkInput.value; qrLinkInput.addEventListener('input', () => { qrImg.src = qrLinkInput.value; }); }
-        const charImg = new Image(); charImg.src = "https://pub-4c6b2dbf3a0c4862a8964b1546de6283.r2.dev/Free%20fire/1781173588043__CITYPNG.COM_Free_Fire_Shani_Female_Character___800x800.png";
-        
-        // App Logo for Watermark
-        const appLogoImg = new Image(); appLogoImg.src = "https://pub-4c6b2dbf3a0c4862a8964b1546de6283.r2.dev/Free%20fire/App%20logo.png";
-
-        function setPreviewMode(mode) {
-            previewMode = mode;
-            document.getElementById('tabOverlay').classList.remove('active');
-            document.getElementById('tabOutro').classList.remove('active');
-            document.getElementById(mode === 'overlay' ? 'tabOverlay' : 'tabOutro').classList.add('active');
-            if(mode === 'outro') previewOutroStartTime = Date.now(); 
+        // Firebase Configuration (আপনার ডাটাবেস লিংক)
+        const firebaseConfig = {
+            databaseURL: "https://booyah-day-offical-default-rtdb.firebaseio.com",
+            projectId: "booyah-day-offical",
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
+        const db = firebase.database();
 
-        function previewLoop() {
-            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-            const time = Date.now() / 1000;
+        // ================= LINK MANAGEMENT =================
+        function submitLink() {
+            let input = document.getElementById("link-input");
+            let url = input.value.trim();
+            if(!url) return alert("Please enter a valid URL!");
+
+            let btn = document.getElementById("submit-btn");
+            btn.innerText = "Adding...";
             
-            if (previewMode === 'overlay') {
-                previewCtx.fillStyle = "rgba(0,0,0,0.3)";
-                previewCtx.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
-                
-                if (chkWatermark.checked) {
-                    drawWatermark(previewCtx, previewCanvas.width, previewCanvas.height, time, watermarkText.value || "BOOYAH DAY");
-                }
-
-                if (chkOverlay.checked) {
-                    drawOverlay(previewCtx, previewCanvas.width, previewCanvas.height, overlayThemeSelect.value, time);
-                }
-            } else if (previewMode === 'outro') {
-                if (chkOutro.checked) {
-                    let elapsed = (time * 1000 - previewOutroStartTime) / 1000;
-                    if (elapsed > 6) { previewOutroStartTime = Date.now(); elapsed = 0; }
-                    drawOutro(previewCtx, previewCanvas.width, previewCanvas.height, outroThemeSelect.value, elapsed);
-                } else {
-                    previewCtx.fillStyle = "#000"; previewCtx.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
-                    previewCtx.fillStyle = "#fff"; previewCtx.font = "20px sans-serif";
-                    previewCtx.textAlign = "center"; previewCtx.fillText("Outro Ad Disabled", previewCanvas.width/2, previewCanvas.height/2);
-                    previewCtx.textAlign = "left";
-                }
-            }
-            requestAnimationFrame(previewLoop);
+            db.ref("pending_links").push({ url: url, addedAt: Date.now() }).then(() => {
+                input.value = ""; btn.innerText = "Add to Queue";
+            }).catch(e => { alert(e.message); btn.innerText = "Add to Queue"; });
         }
-        requestAnimationFrame(previewLoop);
 
-        processBtn.addEventListener('click', async () => {
-            if (!videoInput.files.length) { alert("দয়া করে আগে একটি ভিডিও সিলেক্ট করুন!"); return; }
-            if (isProcessing) return;
-
-            isProcessing = true; processBtn.disabled = true; downloadLink.style.display = "none";
-            statusDiv.innerText = "প্রসেসিং হচ্ছে, দয়া করে অপেক্ষা করুন...";
-
-            const file = videoInput.files[0];
-            sourceVideo.src = URL.createObjectURL(file);
-            sourceVideo.onloadeddata = () => {
-                const aspect = sourceVideo.videoWidth / sourceVideo.videoHeight;
-                if (aspect < 1) { renderCanvas.width = 720; renderCanvas.height = 720 / aspect; } 
-                else { renderCanvas.width = 1280; renderCanvas.height = 1280 / aspect; }
-                startRecording();
-            };
-            sourceVideo.play();
+        db.ref("pending_links").on("value", snap => {
+            let list = document.getElementById("links-list");
+            let countEl = document.getElementById("link-count");
+            list.innerHTML = "";
+            
+            if(snap.exists()) {
+                let data = snap.val();
+                let keys = Object.keys(data);
+                countEl.innerText = keys.length;
+                
+                keys.forEach((key, index) => {
+                    let url = data[key].url;
+                    let div = document.createElement("div");
+                    div.className = "bg-gray-900 p-3 rounded-lg border border-gray-700 flex flex-col gap-2";
+                    // ফুল URL দেখানোর জন্য break-all ব্যবহার করা হয়েছে
+                    div.innerHTML = `
+                        <div class="flex justify-between items-start gap-2">
+                            <span class="bg-blue-500/20 text-blue-400 text-[10px] px-2 py-0.5 rounded font-bold shrink-0">#${index+1}</span>
+                            <button onclick="deleteData('pending_links', '${key}')" class="text-red-500 hover:text-white bg-red-500/10 hover:bg-red-500 text-[10px] font-bold px-2 py-0.5 rounded transition-colors shrink-0">Delete</button>
+                        </div>
+                        <p class="text-xs text-gray-300 break-all bg-black/50 p-2 rounded border border-gray-800">${url}</p>
+                    `;
+                    list.appendChild(div);
+                });
+            } else {
+                countEl.innerText = "0";
+                list.innerHTML = `<p class="text-center text-sm text-gray-500 py-10">No pending links. Bot will auto-search.</p>`;
+            }
         });
 
-        function startRecording() {
-            const stream = renderCanvas.captureStream(30); 
-            let mimeType = 'video/webm; codecs=vp9';
-            if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
+        // ================= ACCOUNT MANAGEMENT =================
+        function submitAccount() {
+            let email = document.getElementById("acc-email").value.trim();
+            let pass = document.getElementById("acc-pass").value.trim();
+            if(!email || !pass) return alert("Email and Password required!");
 
-            mediaRecorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: 3000000 });
-            recordedChunks = [];
-            mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
-            mediaRecorder.onstop = () => {
-                downloadLink.href = URL.createObjectURL(new Blob(recordedChunks, { type: mimeType }));
-                downloadLink.style.display = "block";
-                statusDiv.innerText = "প্রসেসিং সফল হয়েছে!";
-                isProcessing = false; processBtn.disabled = false; processOutroStartTime = 0; 
-            };
-            mediaRecorder.start();
-            processLoop();
+            let btn = document.getElementById("acc-submit-btn");
+            btn.innerText = "Adding...";
+            
+            db.ref("bot_accounts").push({ 
+                email: email, 
+                password: pass, 
+                last_used: 0, // নতুন অ্যাকাউন্ট তাই 0, যাতে বট প্রথমেই এটাকে টার্গেট করে
+                addedAt: Date.now() 
+            }).then(() => {
+                document.getElementById("acc-email").value = ""; 
+                document.getElementById("acc-pass").value = ""; 
+                btn.innerText = "Add Account";
+            }).catch(e => { alert(e.message); btn.innerText = "Add Account"; });
         }
 
-        function processLoop() {
-            if (!isProcessing) return;
-            const time = Date.now() / 1000;
-
-            if (sourceVideo.ended) {
-                if (chkOutro.checked) {
-                    if (processOutroStartTime === 0) processOutroStartTime = Date.now();
-                    const elapsed = (Date.now() - processOutroStartTime) / 1000;
-                    if (elapsed > 6) { mediaRecorder.stop(); return; }
-                    drawOutro(renderCtx, renderCanvas.width, renderCanvas.height, outroThemeSelect.value, elapsed);
-                } else { mediaRecorder.stop(); return; }
+        db.ref("bot_accounts").orderByChild("last_used").on("value", snap => {
+            let list = document.getElementById("accounts-list");
+            let countEl = document.getElementById("acc-count");
+            list.innerHTML = "";
+            
+            if(snap.exists()) {
+                let data = [];
+                snap.forEach(child => { data.push({key: child.key, ...child.val()}); });
+                countEl.innerText = data.length;
+                
+                data.forEach((acc, index) => {
+                    let lastUsedStr = acc.last_used === 0 ? "Never used" : new Date(acc.last_used).toLocaleString();
+                    let div = document.createElement("div");
+                    div.className = "bg-gray-900 p-3 rounded-lg border border-gray-700 flex justify-between items-center";
+                    div.innerHTML = `
+                        <div class="flex flex-col min-w-0 pr-2">
+                            <span class="text-sm font-bold text-gray-200 truncate">${acc.email}</span>
+                            <span class="text-[10px] text-gray-500">Last Post: ${lastUsedStr}</span>
+                        </div>
+                        <button onclick="deleteData('bot_accounts', '${acc.key}')" class="text-red-500 hover:text-white bg-red-500/10 hover:bg-red-500 text-[10px] font-bold px-2 py-1 rounded transition-colors shrink-0">Delete</button>
+                    `;
+                    list.appendChild(div);
+                });
             } else {
-                renderCtx.fillStyle = "#000"; renderCtx.fillRect(0, 0, renderCanvas.width, renderCanvas.height);
-                const scale = Math.min(renderCanvas.width / sourceVideo.videoWidth, renderCanvas.height / sourceVideo.videoHeight);
-                const drawW = sourceVideo.videoWidth * scale, drawH = sourceVideo.videoHeight * scale;
-                renderCtx.drawImage(sourceVideo, (renderCanvas.width - drawW) / 2, (renderCanvas.height - drawH) / 2, drawW, drawH);
-                
-                if (chkWatermark.checked) {
-                    drawWatermark(renderCtx, renderCanvas.width, renderCanvas.height, time, watermarkText.value || "BOOYAH DAY");
-                }
-
-                if (chkOverlay.checked) {
-                    drawOverlay(renderCtx, renderCanvas.width, renderCanvas.height, overlayThemeSelect.value, time);
-                }
+                countEl.innerText = "0";
+                list.innerHTML = `<p class="text-center text-sm text-gray-500 py-10">No accounts added. Bot won't work!</p>`;
             }
-            requestAnimationFrame(processLoop);
-        }
+        });
 
-        // ==========================================
-        // 1. BOUNCING WATERMARK (TikTok / IG Reel Style)
-        // ==========================================
-        function drawWatermark(ctx, cw, ch, time, text) {
-            const scale = cw / 720; 
-            ctx.save(); ctx.scale(scale, scale);
-            const w = 720, h = ch / scale;
-
-            const cycle = 4; // changes position every 4 seconds
-            const posIdx = Math.floor(time / cycle) % 4;
-            const phase = time % cycle;
-            
-            let alpha = 1;
-            if (phase < 0.3) alpha = phase / 0.3; // fade in
-            else if (phase > cycle - 0.3) alpha = (cycle - phase) / 0.3; // fade out
-
-            let x, y;
-            const wmWidth = 250, wmHeight = 50;
-
-            // 0: Top-Left, 1: Bottom-Right, 2: Top-Right, 3: Bottom-Left
-            if (posIdx === 0) { x = 30; y = 60; }
-            else if (posIdx === 1) { x = w - wmWidth - 30; y = h - wmHeight - 120; }
-            else if (posIdx === 2) { x = w - wmWidth - 30; y = 60; }
-            else if (posIdx === 3) { x = 30; y = h - wmHeight - 120; }
-
-            ctx.globalAlpha = alpha;
-            ctx.shadowColor = "rgba(0,0,0,0.8)";
-            ctx.shadowBlur = 10;
-            
-            if (appLogoImg.complete && appLogoImg.width > 0) {
-                ctx.drawImage(appLogoImg, x, y, 40, 40);
-            }
-            
-            ctx.fillStyle = "#fff";
-            ctx.font = "bold 24px 'Hind Siliguri', sans-serif";
-            ctx.fillText(text, x + 50, y + 28);
-            
-            ctx.shadowBlur = 0;
-            ctx.globalAlpha = 1.0;
-            ctx.restore();
-        }
-
-        // ==========================================
-        // 2. OVERLAY DRAWING LOGIC (10 THEMES)
-        // ==========================================
-        function getOverlayStates() {
-            const link = document.getElementById('websiteLink') ? document.getElementById('websiteLink').value.toUpperCase() : (document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM");
-            return [
-                { isQr: false, title: "BOOYAH DAY APP", titleCol: "#ffffff", sub: "ফ্রি ফায়ার খেলে ফ্রি ডায়মন্ড আর্নিং করুন! 💎", subCol: "#ffb900" },
-                { isQr: true,  title: "স্ক্যান করে ডাউনলোড করুন", titleCol: "#00e6ff", sub: "রিল আপলোড করে টাকা আর্নিং এর সুবর্ণ সুযোগ!", subCol: "#ffffff" },
-                { isQr: false, title: "FREE FIRE REWARDS", titleCol: "#ffffff", sub: "প্রতিদিন অ্যাপ থেকে ফ্রি রিওয়ার্ডস জিতে নিন!", subCol: "#ffb900" },
-                { isQr: true,  title: link, titleCol: "#00e6ff", sub: "সরাসরি ওয়েবসাইট থেকে এখনই ইন্সটল করুন!", subCol: "#ffffff" }
-            ];
-        }
-
-        function drawOverlay(ctx, cw, ch, theme, time) {
-            const scale = cw / 720; 
-            ctx.save(); ctx.scale(scale, scale);
-            const w = 720, h = ch / scale;
-            if(theme === '1') drawOverlay1(ctx, w, h, time);
-            if(theme === '2') drawOverlay2(ctx, w, h, time);
-            if(theme === '3') drawOverlay3(ctx, w, h, time);
-            if(theme === '4') drawOverlay4(ctx, w, h, time);
-            if(theme === '5') drawOverlay5(ctx, w, h, time);
-            if(theme === '6') drawOverlay6(ctx, w, h, time);
-            if(theme === '7') drawOverlay7(ctx, w, h, time);
-            if(theme === '8') drawOverlay8(ctx, w, h, time);
-            if(theme === '9') drawOverlay9(ctx, w, h, time);
-            if(theme === '10') drawOverlay10(ctx, w, h, time);
-            ctx.restore();
-        }
-
-        function drawOverlay1(ctx, w, h, time) {
-            const phase = time % 3.5, state = getOverlayStates()[Math.floor((time % 14) / 3.5)];
-            let yOffset = phase < 0.5 ? 20*(1 - Math.pow(1 - phase/0.5, 3)) : phase > 3.0 ? -20*Math.pow((phase-3.0)/0.5, 2) : 20;
-            let alpha = phase < 0.5 ? 1 - Math.pow(1 - phase/0.5, 3) : phase > 3.0 ? 1 - Math.pow((phase-3.0)/0.5, 2) : 1;
-
-            ctx.fillStyle = "rgba(0, 0, 0, 0.75)"; ctx.beginPath(); ctx.roundRect(20, 30, w-40, 90, 20); ctx.fill();
-            ctx.lineWidth = 2; ctx.strokeStyle = "rgba(255, 185, 0, 0.4)"; ctx.stroke();
-            ctx.globalAlpha = alpha;
-            const cY = 30 + yOffset - 20, currentImg = state.isQr ? qrImg : logoImg;
-            
-            let textX = 120;
-            if (currentImg.complete && currentImg.height > 0) {
-                if (state.isQr) { 
-                    ctx.drawImage(currentImg, 35, cY+10, 70, 70); 
-                    textX = 35 + 70 + 20;
-                } else { 
-                    const drawWidth = 40*(currentImg.width/currentImg.height);
-                    ctx.drawImage(currentImg, 35, cY+25, drawWidth, 40); 
-                    textX = 35 + drawWidth + 20;
-                }
-            }
-            
-            ctx.fillStyle = state.titleCol; ctx.font = "bold 24px 'Teko', sans-serif"; ctx.fillText(state.title, textX, cY+40);
-            ctx.fillStyle = state.subCol; ctx.font = "bold 18px 'Hind Siliguri', sans-serif"; ctx.fillText(state.sub, textX, cY+70);
-            ctx.globalAlpha = 1.0; 
-        }
-
-        function drawOverlay2(ctx, w, h, time) {
-            const floatY = Math.sin(time * 3) * 10;
-            if(charImg.complete && charImg.width > 0) ctx.drawImage(charImg, -10, h - 200*(charImg.height/charImg.width) + floatY, 200, 200*(charImg.height/charImg.width));
-            ctx.fillStyle = "rgba(255, 255, 255, 0.95)"; ctx.beginPath(); ctx.roundRect(160, h-180+floatY, 400, 80, 15); ctx.fill();
-            ctx.lineWidth = 3; ctx.strokeStyle = "#ff8c00"; ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(180, h-120+floatY); ctx.lineTo(140, h-80+floatY); ctx.lineTo(210, h-100+floatY); ctx.fillStyle="white"; ctx.fill(); ctx.stroke();
-            const state = getOverlayStates()[Math.floor((time%12)/3)];
-            ctx.fillStyle = "#000"; ctx.font = "bold 24px 'Teko', sans-serif"; ctx.fillText(state.title, 175, h-145+floatY);
-            ctx.fillStyle = "#d32f2f"; ctx.font = "bold 18px 'Hind Siliguri', sans-serif"; ctx.fillText(state.sub, 175, h-115+floatY);
-        }
-
-        function drawOverlay3(ctx, w, h, time) {
-            const rot = time * 0.5, x = w - 80, y = 80, isQr = Math.floor((time%8)/4) === 1;
-            ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.beginPath();
-            for(let i=0; i<6; i++) ctx.arc(0, 0, 60, i*Math.PI/3, i*Math.PI/3 + 0.5);
-            ctx.lineWidth = 4; ctx.strokeStyle = "#00e6ff"; ctx.stroke(); ctx.restore();
-            ctx.fillStyle = "rgba(0,0,0,0.8)"; ctx.beginPath(); ctx.arc(x, y, 55, 0, Math.PI*2); ctx.fill();
-            if (isQr && qrImg.complete) ctx.drawImage(qrImg, x-35, y-35, 70, 70);
-            else if (!isQr && logoImg.complete && logoImg.width > 0) ctx.drawImage(logoImg, x-45, y-(45/(logoImg.width/logoImg.height)), 90, 90/(logoImg.width/logoImg.height));
-            ctx.fillStyle = "rgba(255, 140, 0, 0.9)"; ctx.beginPath(); ctx.roundRect(x-180, y+65, 220, 35, 20); ctx.fill();
-            ctx.fillStyle = "#fff"; ctx.font = "bold 18px 'Hind Siliguri', sans-serif"; ctx.textAlign = "center";
-            ctx.fillText(isQr ? "লিংক থেকে ইন্সটল করুন!" : "ফ্রি ডায়মন্ড জিতুন!", x-70, y+89); ctx.textAlign = "left";
-        }
-
-        function drawOverlay4(ctx, w, h, time) {
-            const tY = h - 50;
-            ctx.fillStyle = "rgba(0, 0, 0, 0.85)"; ctx.fillRect(0, tY, w, 50);
-            ctx.fillStyle = "#ff0000"; ctx.fillRect(0, tY - 3, w, 3); 
-            ctx.fillStyle = "#fff"; ctx.font = "bold 22px 'Hind Siliguri', sans-serif";
-            const text = `🔥 BOOYAH DAY APP 🔥 রিল আপলোড করে টাকা ও ডায়মন্ড আর্নিং এর সুবর্ণ সুযোগ! 💎 ${(document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toLowerCase():"www.google.com")} থেকে এখনই ডাউনলোড করুন! `;
-            ctx.fillText(text, w - ((time * 120) % (ctx.measureText(text).width + w)), tY+32);
-            if(charImg.complete && charImg.width > 0) ctx.drawImage(charImg, w-130, tY - 120*(charImg.height/charImg.width) + 15, 120, 120*(charImg.height/charImg.width));
-        }
-
-        function drawOverlay5(ctx, w, h, time) {
-            const state = getOverlayStates()[Math.floor((time%6)/3)*2]; 
-            ctx.save(); ctx.fillStyle = "rgba(255, 185, 0, 0.9)"; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(350,0); ctx.lineTo(300,100); ctx.lineTo(0,100); ctx.fill();
-            ctx.fillStyle = "rgba(0, 0, 0, 0.8)"; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(330,0); ctx.lineTo(280,90); ctx.lineTo(0,90); ctx.fill();
-            if (time % 1 < 0.1) { ctx.fillStyle = "rgba(255,255,255,0.3)"; ctx.fill(); }
-            if (logoImg.complete && logoImg.width > 0) ctx.drawImage(logoImg, 10, 15, 100, 100/(logoImg.width/logoImg.height));
-            ctx.fillStyle = "#00e6ff"; ctx.font = "bold 26px 'Teko', sans-serif"; ctx.fillText(state.title, 130, 35);
-            ctx.fillStyle = "#fff"; ctx.font = "bold 16px 'Hind Siliguri', sans-serif"; ctx.fillText(state.sub.slice(0,25)+"...", 130, 65); ctx.restore();
-        }
-
-        function drawOverlay6(ctx, w, h, time) {
-            ctx.fillStyle = "rgba(0,0,0,0.8)"; ctx.fillRect(0, 0, w, 80);
-            ctx.fillStyle = "#00e6ff"; ctx.font = "24px sans-serif";
-            for(let i=0; i<8; i++) { ctx.fillText("💎", (i * 90 + time*20) % w, ((time * 150 + i * 40) % 100) - 10); }
-            ctx.textAlign="center"; ctx.fillStyle = "#ffb900"; ctx.font = "bold 35px 'Teko', sans-serif"; ctx.fillText("10,000 DIAMONDS GIVEAWAY!", w/2, 35);
-            ctx.fillStyle = "#fff"; ctx.font = "bold 20px 'Hind Siliguri', sans-serif"; ctx.fillText("অংশ নিতে এখনই রিল আপলোড করুন!", w/2, 65); ctx.textAlign="left";
-        }
-
-        function drawOverlay7(ctx, w, h, time) {
-            const slide = Math.min(1, (time % 5) * 2), ease = 1 - Math.pow(1 - slide, 3);
-            const grad = ctx.createLinearGradient(0,0,w,0); grad.addColorStop(0,"#ff0000"); grad.addColorStop(1,"#ff8c00");
-            ctx.fillStyle = grad; ctx.fillRect(0, h-90, w, 90);
-            if (charImg.complete && charImg.width > 0) {
-                const cW = 160, cH = cW * (charImg.height/charImg.width);
-                ctx.drawImage(charImg, -160 + (ease*160), h - cH, cW, cH);
-                ctx.save(); ctx.translate(w, 0); ctx.scale(-1, 1); ctx.filter = "hue-rotate(180deg) brightness(1.2)"; ctx.drawImage(charImg, -160 + (ease*160), h - cH, cW, cH); ctx.restore();
-            }
-            ctx.textAlign = "center"; ctx.fillStyle = "#fff"; ctx.font = "bold 40px 'Teko', sans-serif"; ctx.fillText("VS TOURNAMENT", w/2, h - 45);
-            ctx.fillStyle = "#000"; ctx.font = "bold 22px 'Hind Siliguri', sans-serif"; ctx.fillText("খেলে জিতে নিন লাখ টাকার ডায়মন্ড!", w/2, h - 15); ctx.textAlign = "left";
-        }
-
-        function drawOverlay8(ctx, w, h, time) {
-            const scroll = (time * 50) % 100;
-            ctx.save(); ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(w,0); ctx.lineTo(w,60); ctx.lineTo(0,60); ctx.clip();
-            ctx.fillStyle = "#ffcc00"; ctx.fillRect(0, 0, w, 60);
-            ctx.fillStyle = "#000";
-            for(let i=-100; i<w+100; i+=60) { ctx.beginPath(); ctx.moveTo(i+scroll, 0); ctx.lineTo(i+30+scroll, 0); ctx.lineTo(i+10+scroll, 60); ctx.lineTo(i-20+scroll, 60); ctx.fill(); }
-            ctx.restore();
-            ctx.textAlign = "center"; ctx.font = "bold 30px 'Hind Siliguri', sans-serif";
-            ctx.lineWidth = 4; ctx.strokeStyle = "#fff"; ctx.strokeText("🚨 লিমিটেড টাইম অফার: ১০০% ডায়মন্ড বোনাস! 🚨", w/2, 40);
-            ctx.fillStyle = "#ff0000"; ctx.fillText("🚨 লিমিটেড টাইম অফার: ১০০% ডায়মন্ড বোনাস! 🚨", w/2, 40); ctx.textAlign = "left";
-        }
-
-        // Theme 9: Esports Broadcast
-        function drawOverlay9(ctx, w, h, time) {
-            const cycle = 6;
-            const phase = time % cycle;
-            let slideX = 0;
-            if (phase < 0.5) slideX = -w + (w * Math.pow(phase/0.5, 0.5)); 
-            else if (phase > 5.5) slideX = w * Math.pow((phase-5.5)/0.5, 2);
-
-            ctx.save();
-            ctx.translate(slideX, 0);
-
-            const y = h - 120;
-            const grad = ctx.createLinearGradient(0, y, w, y);
-            grad.addColorStop(0, "rgba(10,10,15,0.95)");
-            grad.addColorStop(0.7, "rgba(10,10,15,0.9)");
-            grad.addColorStop(1, "rgba(10,10,15,0)");
-            
-            ctx.fillStyle = grad;
-            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w - 100, y); ctx.lineTo(w - 150, y + 80); ctx.lineTo(0, y + 80); ctx.fill();
-
-            ctx.lineWidth = 4; ctx.strokeStyle = "#00e6ff"; ctx.shadowColor = "#00e6ff"; ctx.shadowBlur = 15;
-            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w - 100, y); ctx.stroke(); ctx.shadowBlur = 0;
-
-            if (logoImg.complete && logoImg.width > 0) {
-                ctx.drawImage(logoImg, 20, y + 10, 80, 80/(logoImg.width/logoImg.height));
-            }
-
-            ctx.fillStyle = "#fff"; ctx.font = "bold 32px 'Teko', sans-serif";
-            ctx.fillText("PRO LEAGUE REWARDS", 120, y + 40);
-            
-            ctx.fillStyle = "#ffb900"; ctx.font = "bold 20px 'Hind Siliguri', sans-serif";
-            ctx.fillText("অফিসিয়াল অ্যাপ থেকে আপনার রেওয়ার্ড সংগ্রহ করুন!", 120, y + 70);
-
-            ctx.restore();
-        }
-
-        // Theme 10: iOS Style Popup
-        function drawOverlay10(ctx, w, h, time) {
-            const cycle = 8;
-            const phase = time % cycle;
-            let yOffset = -150;
-            
-            if (phase < 1) yOffset = -150 + Math.pow(phase, 0.3) * 180; 
-            else if (phase > 7) yOffset = 30 - Math.pow((phase-7), 3) * 180; 
-            else yOffset = 30;
-
-            const popupW = 540, popupH = 100, popupX = (w - popupW) / 2, popupY = yOffset;
-
-            ctx.save();
-            ctx.shadowColor = "rgba(0,0,0,0.5)"; ctx.shadowBlur = 30; ctx.shadowOffsetY = 15;
-
-            const grad = ctx.createLinearGradient(popupX, popupY, popupX + popupW, popupY + popupH);
-            grad.addColorStop(0, "rgba(40, 40, 45, 0.95)"); grad.addColorStop(1, "rgba(20, 20, 25, 0.95)");
-            
-            ctx.fillStyle = grad;
-            ctx.beginPath(); ctx.roundRect(popupX, popupY, popupW, popupH, 25); ctx.fill();
-
-            ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
-            ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(255, 255, 255, 0.15)"; ctx.stroke();
-
-            const iconSize = 60, iconX = popupX + 20, iconY = popupY + 20;
-            ctx.save(); ctx.beginPath(); ctx.arc(iconX + iconSize/2, iconY + iconSize/2, iconSize/2, 0, Math.PI*2); ctx.clip();
-            if (appLogoImg.complete && appLogoImg.height > 0) {
-                ctx.fillStyle = "#fff"; ctx.fillRect(iconX, iconY, iconSize, iconSize);
-                ctx.drawImage(appLogoImg, iconX, iconY, iconSize, iconSize);
-            }
-            ctx.restore();
-
-            ctx.fillStyle = "#ffffff"; ctx.font = "bold 24px 'Hind Siliguri', sans-serif";
-            ctx.fillText("Booyah Day App", iconX + iconSize + 20, popupY + 45);
-
-            ctx.fillStyle = "#00e6ff"; ctx.font = "18px 'Hind Siliguri', sans-serif";
-            ctx.fillText("নতুন ইভেন্ট: ফ্রি ডায়মন্ড ক্লেইম করুন!", iconX + iconSize + 20, popupY + 75);
-
-            const btnW = 90, btnH = 36, btnX = popupX + popupW - btnW - 20, btnY = popupY + (popupH - btnH)/2;
-            ctx.fillStyle = "#ff8c00"; ctx.beginPath(); ctx.roundRect(btnX, btnY, btnW, btnH, 18); ctx.fill();
-            ctx.fillStyle = "#fff"; ctx.font = "bold 16px sans-serif"; ctx.textAlign = "center";
-            ctx.fillText("CLAIM", btnX + btnW/2, btnY + 23);
-
-            ctx.restore();
-        }
-
-
-        // ==========================================
-        // 3. OUTRO DRAWING LOGIC (8 THEMES)
-        // ==========================================
-        function drawOutro(ctx, cw, ch, theme, elapsed) {
-            ctx.fillStyle = "#000000"; ctx.fillRect(0, 0, cw, ch);
-            const scale = cw / 720; ctx.save(); ctx.scale(scale, scale);
-            const w = 720, h = ch / scale;
-            if(theme === '1') drawOutro1(ctx, w, h, elapsed);
-            if(theme === '2') drawOutro2(ctx, w, h, elapsed);
-            if(theme === '3') drawOutro3(ctx, w, h, elapsed);
-            if(theme === '4') drawOutro4(ctx, w, h, elapsed);
-            if(theme === '5') drawOutro5(ctx, w, h, elapsed);
-            if(theme === '6') drawOutro6(ctx, w, h, elapsed);
-            if(theme === '7') drawOutro7(ctx, w, h, elapsed);
-            if(theme === '8') drawOutro8(ctx, w, h, elapsed);
-            ctx.restore();
-        }
-
-        // ... [Theme 1 to 6 remains the same] ...
-        function drawOutro1(ctx, w, h, elapsed) {
-            let logoScale = 1, logoY = -200, shakeX = 0, shakeY = 0;
-            if (elapsed < 0.5) { logoScale = 4 - (elapsed * 6); logoY = -500 + (elapsed * 1000); } 
-            else { logoScale = 1 + Math.sin(elapsed * 3) * 0.02; if (elapsed < 0.8) { shakeX = (Math.random()-0.5)*20; shakeY = (Math.random()-0.5)*20; } }
-
-            if (elapsed >= 0.5 && elapsed < 2.0) {
-                const p = (elapsed - 0.5) / 1.5; ctx.globalAlpha = (1 - p) * 0.6;
-                for (let i = 0; i < 10; i++) {
-                    const ang = (i/10)*Math.PI*2, dist = p*350, px = w/2 + Math.cos(ang)*dist + shakeX, py = h/2 - 150 + Math.sin(ang)*dist*0.5 + shakeY, rad = 60 + p*200;
-                    const grad = ctx.createRadialGradient(px, py, 0, px, py, rad);
-                    grad.addColorStop(0, "rgba(255, 200, 150, 0.8)"); grad.addColorStop(1, "rgba(200, 200, 200, 0)");
-                    ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(px, py, rad, 0, Math.PI*2); ctx.fill();
-                }
-                ctx.globalAlpha = 1.0;
-            }
-
-            const aspect = logoImg.complete && logoImg.width > 0 ? (logoImg.width / logoImg.height) : 3;
-            const bW = Math.min(w * 0.7, 450), lW = bW * logoScale, lH = (bW / aspect) * logoScale;
-            if (logoImg.complete) { ctx.shadowColor = "rgba(255, 140, 0, 0.8)"; ctx.shadowBlur = 40; ctx.drawImage(logoImg, (w - lW)/2 + shakeX, (h/2) - 250 + logoY + shakeY, lW, lH); ctx.shadowBlur = 0; }
-
-            if (elapsed > 0.8) {
-                const easeOut = 1 - Math.pow(1 - Math.min(1, (elapsed - 0.8) / 0.8), 3);
-                ctx.globalAlpha = Math.min(1, (elapsed - 0.8) / 0.8); ctx.textAlign = "center";
-                const qrSize = 140, qrY = (h / 2) - 80 + (100 * (1 - easeOut));
-                if (qrImg.complete) { ctx.fillStyle = "#fff"; ctx.fillRect((w - qrSize)/2 - 5, qrY - 5, qrSize + 10, qrSize + 10); ctx.drawImage(qrImg, (w - qrSize)/2, qrY, qrSize, qrSize); }
-                ctx.fillStyle = "#ffb900"; ctx.font = "bold 40px 'Teko', sans-serif"; ctx.fillText("CLAIM YOUR FREE DIAMOND!", w / 2, qrY + qrSize + 50);
-                ctx.fillStyle = "#ffffff"; ctx.font = "bold 26px 'Hind Siliguri', sans-serif"; ctx.fillText("এখনই শুরু করুন কন্টেন্ট ক্রিয়েটিং!", w / 2, qrY + qrSize + 90);
-                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 22px 'Hind Siliguri', sans-serif"; ctx.fillText("রিলস বা ভিডিও আপলোড করে টাকা ও ডায়মন্ড আর্নিং করুন!", w / 2, qrY + qrSize + 130);
-                ctx.fillStyle = "#ff4b00"; ctx.font = "bold 40px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w / 2, qrY + qrSize + 200);
-                ctx.globalAlpha = 1; ctx.textAlign = "left"; 
+        // ================= GENERAL DELETE =================
+        function deleteData(path, key) {
+            if(confirm("Are you sure?")) {
+                db.ref(path + "/" + key).remove();
             }
         }
-
-        function drawOutro2(ctx, w, h, elapsed) {
-            const grad = ctx.createLinearGradient(0, h, 0, h - 400); grad.addColorStop(0, "rgba(255, 60, 0, 0.5)"); grad.addColorStop(1, "rgba(0, 0, 0, 0)");
-            ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h);
-            if (charImg.complete && charImg.width > 0) {
-                const easeOut = 1 - Math.pow(1 - Math.min(1, elapsed / 1.0), 3);
-                const cW = 350, cH = cW * (charImg.height / charImg.width);
-                ctx.globalAlpha = Math.min(1, elapsed);
-                ctx.drawImage(charImg, w/2 - cW/2, h - cH + (200 * (1-easeOut)), cW, cH); ctx.globalAlpha = 1.0;
-            }
-            if (elapsed > 0.5) {
-                const aspect = logoImg.complete && logoImg.width > 0 ? (logoImg.width / logoImg.height) : 3;
-                if (logoImg.complete) ctx.drawImage(logoImg, w/2 - 150, 80, 300, 300/aspect);
-                ctx.textAlign = "center";
-                ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText("FREE FIRE REWARDS", w/2, 220);
-                ctx.fillStyle = "#fff"; ctx.font = "bold 24px 'Hind Siliguri', sans-serif"; ctx.fillText("গেম খেলুন, রিলস আপলোড করুন এবং জিতুন!", w/2, 260);
-                if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 60, 320, 120, 120);
-                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 35px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, 480);
-                ctx.textAlign = "left";
-            }
-        }
-
-        function drawOutro3(ctx, w, h, elapsed) {
-            if (Math.random() > 0.9) { ctx.fillStyle = "rgba(0, 230, 255, 0.1)"; ctx.fillRect(0, Math.random()*h, w, Math.random()*50); }
-            if (elapsed > 0.2 && logoImg.complete) {
-                const aspect = logoImg.width > 0 ? (logoImg.width / logoImg.height) : 3;
-                ctx.drawImage(logoImg, w/2 - 160 + (Math.random()>0.9?(Math.random()-0.5)*20:0), 150, 320, 320/aspect);
-            }
-            if (elapsed > 1.0) {
-                ctx.textAlign = "center"; ctx.fillStyle = "#0ff"; ctx.font = "bold 26px 'Courier New', monospace";
-                ctx.fillText("> SYSTEM HACKED...".substring(0, Math.min(18, Math.floor((elapsed - 1.0) * 20))), w/2, 320);
-                if(elapsed > 1.8) ctx.fillText("> CLAIM FREE DIAMONDS!".substring(0, Math.min(22, Math.floor((elapsed - 1.8) * 20))), w/2, 360);
-                if(elapsed > 2.5) {
-                    ctx.fillText("> UPLOAD REELS TO EARN.".substring(0, Math.min(23, Math.floor((elapsed - 2.5) * 20))), w/2, 400);
-                    if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 50, 450, 100, 100);
-                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 36px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, 600);
-                }
-                ctx.textAlign = "left";
-            }
-        }
-
-        function drawOutro4(ctx, w, h, elapsed) {
-            ctx.save(); ctx.translate(w/2, h/2 - 100);
-            if (elapsed > 0.3) {
-                const explodeP = Math.min(1, (elapsed - 0.3) * 1.5); 
-                for(let i=0; i<40; i++) {
-                    const angle = (i/40)*Math.PI*2, dist = explodeP * 400 * (0.5 + Math.random()*0.5);
-                    ctx.fillStyle = "#00e6ff"; ctx.globalAlpha = Math.max(0, 1 - explodeP);
-                    ctx.beginPath(); ctx.arc(Math.cos(angle)*dist, Math.sin(angle)*dist, Math.random()*15+5, 0, Math.PI*2); ctx.fill();
-                }
-            }
-            ctx.restore();
-            if (elapsed > 0.8) {
-                ctx.globalAlpha = Math.min(1, (elapsed - 0.8)*2); ctx.textAlign = "center";
-                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 55px 'Teko', sans-serif"; ctx.fillText("10,000 DIAMONDS WAITING!", w/2, h/2 - 20);
-                ctx.fillStyle = "#fff"; ctx.font = "bold 28px 'Hind Siliguri', sans-serif"; ctx.fillText("শুধু রিল আপলোড করলেই পাবেন!", w/2, h/2 + 30);
-                if (qrImg.complete) { ctx.fillStyle = "#fff"; ctx.fillRect(w/2-80, h/2+80, 160, 160); ctx.drawImage(qrImg, w/2-75, h/2+85, 150, 150); }
-                ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 290);
-                ctx.globalAlpha = 1; ctx.textAlign = "left";
-            }
-        }
-
-        function drawOutro5(ctx, w, h, elapsed) {
-            const flicker = (Math.random() > 0.8 && elapsed < 2) || elapsed > 1.5;
-            if (flicker) {
-                ctx.textAlign = "center"; ctx.font = "bold 100px 'Teko', sans-serif";
-                ctx.shadowColor = "#ff00ff"; ctx.shadowBlur = 30; ctx.fillStyle = "#fff"; ctx.fillText("BOOYAH!", w/2, h/2 - 120);
-                ctx.shadowColor = "#00e6ff"; ctx.font = "bold 60px 'Teko', sans-serif"; ctx.fillText("FREE DIAMONDS", w/2, h/2 - 30);
-                ctx.shadowBlur = 0;
-                if (elapsed > 2) {
-                    ctx.fillStyle = "#fff"; ctx.font = "bold 26px 'Hind Siliguri', sans-serif"; ctx.fillText("অ্যাপটি এখনই ইন্সটল করে জিতে নিন!", w/2, h/2 + 40);
-                    if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 80, h/2 + 80, 160, 160);
-                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 300);
-                }
-                ctx.textAlign = "left";
-            }
-        }
-
-        function drawOutro6(ctx, w, h, elapsed) {
-            const timeLeft = Math.max(0, 59 - elapsed*10), ms = Math.floor((timeLeft % 1) * 100), secs = Math.floor(timeLeft);
-            const timeStr = `00:${secs.toString().padStart(2,'0')}:${ms.toString().padStart(2,'0')}`;
-            ctx.textAlign = "center"; ctx.shadowColor = "#ff0000"; ctx.shadowBlur = 40; ctx.fillStyle = "#ff0000";
-            ctx.font = "bold 110px 'Courier New', monospace"; ctx.fillText(timeStr, w/2, h/2 - 100); ctx.shadowBlur = 0;
-            if (elapsed > 1) {
-                ctx.fillStyle = "#fff"; ctx.font = "bold 34px 'Hind Siliguri', sans-serif"; ctx.fillText("সময় শেষ হওয়ার আগেই ক্লেইম করুন!", w/2, h/2);
-                ctx.fillStyle = "#ffb900"; ctx.font = "bold 26px 'Hind Siliguri', sans-serif"; ctx.fillText("রিলস আপলোড করে আনলিমিটেড ডায়মন্ড আর্নিং!", w/2, h/2 + 50);
-                if (qrImg.complete) ctx.drawImage(qrImg, w/2 - 75, h/2 + 90, 150, 150);
-                ctx.fillStyle = "#00e6ff"; ctx.font = "bold 45px 'Teko', sans-serif"; ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 290);
-            }
-            ctx.textAlign = "left";
-        }
-
-        // Theme 7: Golden Victory
-        function drawOutro7(ctx, w, h, elapsed) {
-            ctx.fillStyle = "#1a1200"; ctx.fillRect(0,0,w,h);
-            
-            // Confetti
-            if (elapsed > 0.5) {
-                for(let i=0; i<30; i++) {
-                    ctx.fillStyle = i%2===0 ? "#ffd700" : "#ff8c00";
-                    const x = (i * 40 + Math.sin(elapsed*5 + i)*20) % w;
-                    const y = (elapsed * 200 + i*30) % h;
-                    ctx.fillRect(x, y, 8, 15);
-                }
-            }
-
-            if (elapsed > 0.2) {
-                ctx.textAlign = "center";
-                
-                // Huge Golden 3D Text
-                ctx.font = "bold 100px 'Teko', sans-serif";
-                for(let i=10; i>0; i--) {
-                    ctx.fillStyle = i===1 ? "#fff" : `rgb(${255 - i*15}, ${200 - i*10}, 0)`;
-                    ctx.fillText("VICTORY!", w/2, h/2 - 150 - i);
-                }
-
-                if (elapsed > 1.0) {
-                    ctx.globalAlpha = Math.min(1, elapsed - 1.0);
-                    ctx.fillStyle = "#fff"; ctx.font = "bold 30px 'Hind Siliguri', sans-serif";
-                    ctx.fillText("গ্লোবাল লিডারবোর্ডে জায়গা করে নিন!", w/2, h/2 - 60);
-                    
-                    if (qrImg.complete) { ctx.fillStyle = "#fff"; ctx.fillRect(w/2-80, h/2-10, 160, 160); ctx.drawImage(qrImg, w/2-75, h/2-5, 150, 150); }
-                    
-                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 45px 'Teko', sans-serif";
-                    ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 210);
-                    ctx.globalAlpha = 1.0;
-                }
-                ctx.textAlign = "left";
-            }
-        }
-
-        // Theme 8: Speed Blur Rush
-        function drawOutro8(ctx, w, h, elapsed) {
-            ctx.fillStyle = "#000"; ctx.fillRect(0,0,w,h);
-
-            // Motion Blur lines
-            ctx.fillStyle = "rgba(0, 230, 255, 0.5)";
-            for(let i=0; i<20; i++) {
-                const len = Math.random()*200 + 50;
-                const speed = (elapsed * 2000 + i*100) % w;
-                ctx.fillRect(speed, i * (h/20), len, 2);
-            }
-
-            if (elapsed > 0.5) {
-                const zoom = Math.max(1, 3 - (elapsed - 0.5)*10); // 3 to 1 fast
-                const aspect = logoImg.complete && logoImg.width > 0 ? (logoImg.width / logoImg.height) : 3;
-                const lW = 300 * zoom, lH = (300/aspect) * zoom;
-                
-                ctx.globalAlpha = zoom === 1 ? 1 : 0.5; // blur opacity
-                if (logoImg.complete) ctx.drawImage(logoImg, (w-lW)/2, h/2 - 200 - (lH/2), lW, lH);
-                ctx.globalAlpha = 1.0;
-                
-                if (zoom === 1) {
-                    ctx.textAlign = "center";
-                    ctx.fillStyle = "#fff"; ctx.font = "bold 40px 'Teko', sans-serif";
-                    ctx.fillText("SPEED REWARDS ACTIVATED", w/2, h/2 + 30);
-                    ctx.fillStyle = "#ffb900"; ctx.font = "bold 24px 'Hind Siliguri', sans-serif";
-                    ctx.fillText("দেরি না করে এখনই ডাউনলোড করুন!", w/2, h/2 + 70);
-                    
-                    if (qrImg.complete) ctx.drawImage(qrImg, w/2-60, h/2 + 100, 120, 120);
-                    ctx.fillStyle = "#00e6ff"; ctx.font = "bold 40px 'Teko', sans-serif";
-                    ctx.fillText((document.getElementById('websiteLink')?document.getElementById('websiteLink').value.toUpperCase():"WWW.GOOGLE.COM"), w/2, h/2 + 270);
-                    ctx.textAlign = "left";
-                }
-            }
-        }
-
     </script>
 </body>
 </html>
